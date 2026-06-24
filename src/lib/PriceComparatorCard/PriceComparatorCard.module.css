@@ -1,0 +1,217 @@
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 24px;
+  font-family: var(--font-body);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--ink) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.glow {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  height: 256px;
+  width: 256px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  filter: blur(64px);
+  transition: background 0.7s ease;
+  pointer-events: none;
+}
+
+.card:hover .glow {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  padding-bottom: 20px;
+}
+
+.headLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconBox {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.stats {
+  display: flex;
+}
+
+.stat {
+  flex: 1;
+}
+
+.statFirst {
+  padding-right: 24px;
+}
+
+.stat + .stat {
+  padding-left: 24px;
+  border-left: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.statValue {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.statValueMuted {
+  color: color-mix(in srgb, var(--ink) 45%, transparent);
+  text-decoration: line-through;
+}
+
+.delta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--action);
+}
+
+.chartWrap {
+  position: relative;
+  height: 96px;
+  width: 100%;
+}
+
+.chart {
+  height: 100%;
+  width: 100%;
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.chartStopTop {
+  stop-color: var(--accent);
+  stop-opacity: 0.2;
+}
+
+.chartStopBottom {
+  stop-color: var(--accent);
+  stop-opacity: 0;
+}
+
+.dot {
+  position: absolute;
+  right: 2px;
+  top: 78%;
+}
+
+.dotCore {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.dotPulse {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+  animation: pulse 1.6s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+.footer {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  padding-top: 20px;
+}
+
+.badge {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  background: transparent;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotPulse {
+    animation: none;
+  }
+  .glow,
+  .card:hover .glow {
+    transition: none;
+  }
+}

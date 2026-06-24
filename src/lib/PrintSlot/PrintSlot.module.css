@@ -1,0 +1,44 @@
+.frame {
+  margin: 0;
+  width: 240px;
+  max-width: 80vw;
+}
+
+.img,
+.placeholder {
+  width: 100%;
+  aspect-ratio: 9 / 19;
+  border-radius: 28px;
+  border: 8px solid var(--ink);
+  box-sizing: border-box;
+  display: block;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--ink) 30%, transparent);
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
+}
+
+.placeholderTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.placeholderSub {
+  font-size: 12px;
+}
+
+.cap {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+}

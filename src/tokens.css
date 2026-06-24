@@ -1,0 +1,22 @@
+/* Tokens travados (CONTEXTO §5). O template é CEGO ao nicho:
+   entre beleza/pet/casa só muda --accent — o resto é idêntico. */
+:root {
+  /* base */
+  --ink: #15201c;
+  --bg: #fbfaf6;
+  --action: #1faf54; /* verde do CTA */
+  --seal: #ffd23f; /* selo / carimbo % OFF */
+  --surface: #ffffff; /* superfície de card sobre o bg */
+
+  /* acentos por nicho */
+  --accent-beleza: #e45e92;
+  --accent-pet: #1fb39c;
+  --accent-casa: #4f7ca6;
+
+  /* acento ATIVO — quem define por página é niches.js; aqui um default */
+  --accent: var(--accent-beleza);
+
+  /* fontes */
+  --font-display: 'Baloo 2', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+}

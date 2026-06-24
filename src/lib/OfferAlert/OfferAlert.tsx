@@ -1,0 +1,30 @@
+import styles from './OfferAlert.module.css'
+
+const BELL =
+  'M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H80.3C106.1 328 120 281.3 120 233.4V200c0-57.4 46.6-104 104-104zm64 352H160c0 17 6.7 33.3 18.7 45.3S207 512 224 512s33.3-6.7 45.3-18.7S288 465 288 448z'
+
+// Adaptado de Uiverse.io (JohnnyCSilva) — card de notificação estilo WhatsApp.
+export type OfferAlertProps = {
+  nome?: string
+  msg: string
+  tempo?: string
+}
+
+export function OfferAlert({ nome = 'OfertaBoa', msg, tempo = 'agora' }: OfferAlertProps) {
+  return (
+    <div className={styles.card}>
+      <div className={styles.avatar}>
+        <svg viewBox="0 0 448 512" aria-hidden="true">
+          <path d={BELL} />
+        </svg>
+      </div>
+      <div className={styles.textBox}>
+        <div className={styles.head}>
+          <span className={styles.nome}>{nome}</span>
+          <span className={styles.tempo}>{tempo}</span>
+        </div>
+        <p className={styles.msg}>{msg}</p>
+      </div>
+    </div>
+  )
+}

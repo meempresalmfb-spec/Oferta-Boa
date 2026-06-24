@@ -1,0 +1,30 @@
+/* Grade de 2 colunas. Se a contagem for ímpar, a última foto ocupa a linha
+   inteira (vira destaque) — assim nenhuma foto fica "sozinha" largada. */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.item {
+  min-width: 0;
+}
+
+.img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.item:last-child:nth-child(odd) .img {
+  aspect-ratio: 16 / 9;
+}

@@ -1,0 +1,73 @@
+.button {
+  width: 220px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 15px;
+  background-color: var(--ink);
+  border-radius: 10px;
+  color: #fff;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  transition-duration: 0.2s;
+}
+
+.bell {
+  width: 15px;
+}
+
+.bell path {
+  fill: var(--action);
+}
+
+.arrow {
+  position: absolute;
+  right: 0;
+  width: 32px;
+  height: 100%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: color-mix(in srgb, var(--ink) 85%, white);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 2px;
+}
+
+.button:hover .arrow {
+  animation: slide-right 0.6s ease-out both;
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.button:active {
+  transform: translate(1px, 1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover .arrow {
+    animation: none;
+  }
+}

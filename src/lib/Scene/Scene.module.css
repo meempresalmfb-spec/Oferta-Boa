@@ -1,0 +1,117 @@
+.scene {
+  padding: 64px 24px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.text {
+  max-width: 520px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.titulo {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.copy {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+}
+
+.media {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 760px) {
+  .inner {
+    flex-direction: row;
+    gap: 48px;
+    justify-content: space-between;
+  }
+
+  .mediaLeft .inner {
+    flex-direction: row-reverse;
+  }
+
+  .text {
+    flex: 1 1 0;
+  }
+
+  .media {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  /* stack: texto em cima, media (ex.: 2 cards lado a lado) embaixo */
+  .stack .inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stack .text {
+    flex: 0 0 auto;
+    max-width: 680px;
+  }
+
+  .stack .media {
+    width: 100%;
+  }
+}
+
+/* ---- seção com foto de fundo (álbum em scroll) ---- */
+.hasBg {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 24px;
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ink) 50%, transparent),
+    color-mix(in srgb, var(--ink) 72%, transparent)
+  );
+}
+
+.hasBg .inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.hasBg .titulo {
+  color: #fff;
+}
+
+.hasBg .copy {
+  color: rgba(255, 255, 255, 0.92);
+}

@@ -1,0 +1,86 @@
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+  padding: 1.5em 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: 15px;
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--ink) 10%, transparent);
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+/* glow no --accent (no lugar do neon arco-íris do original) */
+.card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent),
+    0 10px 40px color-mix(in srgb, var(--accent) 35%, transparent),
+    0 0 60px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+
+.price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.legenda {
+  margin: 0;
+  font-size: 0.95em;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+}
+
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  line-height: 1.4;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 1.6em;
+}
+
+.bullets li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+  color: var(--action);
+}
+
+.ctaSlot {
+  margin-top: auto;
+  padding-top: 0.5em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
