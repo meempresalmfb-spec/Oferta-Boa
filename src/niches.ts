@@ -24,6 +24,7 @@ export type Niche = {
   heroTitulo: string
   heroSub: string
   ctaLabel: string
+  heroCta?: boolean // variante objetiva: CTA já no hero (acima da dobra)
   cenas: SceneData[]
 }
 
@@ -74,7 +75,7 @@ export const niches: Record<Niche['slug'], Niche> = {
     heroTitulo: 'As melhores ofertas de beleza, garimpadas todo dia',
     heroSub:
       'Todo dia, as melhores ofertas de skincare, maquiagem e perfumaria, sempre no menor preço e com link direto do parceiro, aqui no nosso grupo de WhatsApp.',
-    ctaLabel: 'Entrar no grupo de beleza',
+    ctaLabel: 'Entrar no grupo de ofertas',
     cenas: cenasComuns(
       [
         {
@@ -120,7 +121,7 @@ export const niches: Record<Niche['slug'], Niche> = {
     heroTitulo: 'Mime seu pet gastando bem menos',
     heroSub:
       'Todo dia, as melhores ofertas de ração, petiscos e acessórios pro seu pet, sempre no menor preço e com link direto do parceiro, aqui no nosso grupo de WhatsApp.',
-    ctaLabel: 'Entrar no grupo pet',
+    ctaLabel: 'Entrar no grupo de ofertas',
     cenas: cenasComuns(
       [
         {
@@ -168,7 +169,7 @@ export const niches: Record<Niche['slug'], Niche> = {
     heroTitulo: 'Sua casa organizada, gastando bem menos',
     heroSub:
       'Todo dia, as melhores ofertas de panelas, potes, utilidades e organização, sempre no menor preço e com link direto do parceiro, aqui no nosso grupo de WhatsApp.',
-    ctaLabel: 'Entrar no grupo de casa',
+    ctaLabel: 'Entrar no grupo de ofertas',
     cenas: cenasComuns(
       [
         {
@@ -207,4 +208,135 @@ export const niches: Record<Niche['slug'], Niche> = {
       },
     ),
   },
+}
+
+// ======================================================================
+// VARIANTES DE TESTE A/B — mesmo template CEGO, cada uma com a própria URL.
+// Nada de novo no NichePage além do `heroCta` opcional. A variante muda só:
+//   - o hero (título/sub) e
+//   - a ORDEM/escolha das cenas (que já são 100% dado).
+// 'direto'  (objetiva): baixa fricção, CTA na dobra, 1 prova visual.
+// 'prova'   (comparativa): trust-first, abre no comparador + slot de print.
+// ======================================================================
+
+type Slug = Niche['slug']
+
+const nounOf: Record<Slug, string> = {
+  beleza: 'skincare, maquiagem e perfumaria',
+  pet: 'ração, petiscos e acessórios',
+  casa: 'panelas, potes, utilidades e organização',
+}
+
+// Reaproveita os dados que já vivem em `niches` (sem duplicar comparador/fotos).
+const comparadoresOf = (s: Slug) => niches[s].cenas.find((c) => c.id === 's1')?.comparadores ?? []
+const fotosOf = (s: Slug) => niches[s].cenas.find((c) => c.id === 's2')?.fotos ?? []
+
+const heroVariante: Record<Slug, Record<'direto' | 'prova', { t: string; sub: string }>> = {
+  beleza: {
+    direto: {
+      t: 'Skincare e maquiagem no menor preço, todo dia',
+      sub: 'As melhores ofertas de beleza caem todo dia no nosso grupo de WhatsApp, com link direto do parceiro. Entrar é de graça.',
+    },
+    prova: {
+      t: 'O menor preço de verdade em beleza, e a gente prova',
+      sub: 'Um software confere o histórico de cada item de skincare, maquiagem e perfumaria antes de indicar. Veja como funciona e entre no grupo.',
+    },
+  },
+  pet: {
+    direto: {
+      t: 'Ração e petisco custando bem menos, todo dia',
+      sub: 'As melhores ofertas pro seu pet caem todo dia no grupo do WhatsApp, com link direto do parceiro. Entrar é grátis.',
+    },
+    prova: {
+      t: 'Por que nossas ofertas de pet são o menor preço real',
+      sub: 'A gente cruza o preço de ração, petisco e acessório com o histórico de cada item antes de mandar. Veja a prova e entre no grupo.',
+    },
+  },
+  casa: {
+    direto: {
+      t: 'Panela, pote e organização gastando bem menos',
+      sub: 'As melhores ofertas pra casa caem todo dia no grupo do WhatsApp, com link direto do parceiro. Entrar é grátis.',
+    },
+    prova: {
+      t: 'Como a gente acha o menor preço de verdade pra sua casa',
+      sub: 'Um software confere o histórico de cada item de casa e organização antes de indicar. Veja a prova e entre no grupo.',
+    },
+  },
+}
+
+// OBJETIVA: hero(+CTA) -> 1 cena de prova visual -> grátis+CTA. Curta de propósito.
+function cenasObjetiva(s: Slug): SceneData[] {
+  const noun = nounOf[s]
+  return [
+    {
+      id: 'v1',
+      eyebrow: 'todo dia no whatsapp',
+      titulo: 'As ofertas caem todo dia, direto no grupo',
+      copy: `Todo dia enviamos as melhores ofertas de ${noun} no grupo, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no grupo, nunca no privado.`,
+      media: 'fotos',
+      fotos: fotosOf(s),
+      lado: 'esq',
+    },
+    {
+      id: 'v2',
+      eyebrow: 'e o melhor de tudo',
+      titulo: '100% gratuito pra você',
+      copy: 'Sem mensalidade, sem pegadinha, e o preço pra você continua o mesmo ou menor. A gente recebe comissão da parceria com os marketplaces, por isso o seu acesso é, e sempre será, grátis.',
+      media: 'whyfree',
+      lado: 'dir',
+    },
+  ]
+}
+
+// COMPARATIVA: hero -> comparador (lead) -> print do grupo -> fotos -> grátis. Densa, trust-first.
+function cenasComparativa(s: Slug): SceneData[] {
+  const noun = nounOf[s]
+  return [
+    {
+      id: 'v1',
+      eyebrow: 'monitoramento 24 horas',
+      titulo: 'Um software vigia os preços 24 horas por dia',
+      copy: `Todos os dias o nosso software acompanha o preço de ${noun} e cruza com o histórico de cada item, então só indicamos o que está realmente no menor preço, nunca uma falsa promoção.`,
+      media: 'comparador',
+      comparadores: comparadoresOf(s),
+      stack: true,
+      lado: 'dir',
+    },
+    {
+      id: 'v2',
+      eyebrow: 'prova real',
+      titulo: 'É assim que a oferta chega pra você',
+      copy: 'Cada oferta vai pro grupo com o preço conferido e o link direto do parceiro. Sem enrolação: se não está no menor preço, não entra.',
+      media: 'print',
+      lado: 'esq',
+    },
+    {
+      id: 'v3',
+      eyebrow: 'e o melhor de tudo',
+      titulo: '100% gratuito pra você',
+      copy: 'Não tem mensalidade, não tem pegadinha. A gente recebe uma comissão da parceria com os marketplaces, e é por isso que o seu acesso é totalmente gratuito.',
+      media: 'whyfree',
+      lado: 'dir',
+    },
+  ]
+}
+
+function makeVariant(s: Slug, kind: 'direto' | 'prova'): Niche {
+  const h = heroVariante[s][kind]
+  return {
+    ...niches[s],
+    heroTitulo: h.t,
+    heroSub: h.sub,
+    heroCta: true, // CTA na capa nas duas variantes (direto e prova)
+    cenas: kind === 'direto' ? cenasObjetiva(s) : cenasComparativa(s),
+  }
+}
+
+export const variants: Record<string, Niche> = {
+  'beleza-direto': makeVariant('beleza', 'direto'),
+  'beleza-prova': makeVariant('beleza', 'prova'),
+  'pet-direto': makeVariant('pet', 'direto'),
+  'pet-prova': makeVariant('pet', 'prova'),
+  'casa-direto': makeVariant('casa', 'direto'),
+  'casa-prova': makeVariant('casa', 'prova'),
 }

@@ -61,6 +61,11 @@ export function NichePage({ niche }: { niche: Niche }) {
           <p className={styles.kicker}>{niche.nome}</p>
           <h1 className={styles.heroTitulo}>{niche.heroTitulo}</h1>
           <p className={styles.heroSub}>{niche.heroSub}</p>
+          {niche.heroCta ? (
+            <div className={styles.heroCta}>
+              <CtaButton href={grupoUrl}>{niche.ctaLabel}</CtaButton>
+            </div>
+          ) : null}
         </div>
       </header>
 

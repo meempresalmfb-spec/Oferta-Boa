@@ -98,3 +98,15 @@
   width: 100%;
   max-width: 420px;
 }
+
+/* CTA acima da dobra — só aparece nas variantes objetivas (heroCta) */
+.heroCta {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.heroCta :global(a) {
+  width: 100%;
+  max-width: 360px;
+}
