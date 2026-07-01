@@ -3,8 +3,8 @@
 export const config = {
   marca: 'Ofertaboa.ia.br',
   gruposWhatsapp: {
-    beleza: '#', // https://chat.whatsapp.com/... (Fase 6)
-    pet: '#',
-    casa: '#',
+    beleza: 'https://chat.whatsapp.com/Fjza93cxBbYBgtmNMpepu1',
+    pet: 'https://chat.whatsapp.com/KFwh3ObwvKUFWyNoDXLkez',
+    casa: 'https://chat.whatsapp.com/IVWzgvXxFQgDvcQM8vIQ3t',
   } as Record<string, string>,
 }
