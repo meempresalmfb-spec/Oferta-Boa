@@ -11,10 +11,13 @@ storybook-static
 # imagens-fonte (originais pesados) e screenshots de dev — não vão pro repo
 Nova pasta/
 /*.png
+/*.jpg
+/*.jpeg
 
 # arquivos internos do projeto — NÃO vão pro repo público (skills, estratégia, docs de trabalho)
 .claude/
 docs/
+ferramentas/
 CONTEXTO.md
 MUDANCAS-ESTRUTURAIS.md
 checkpoint.md
