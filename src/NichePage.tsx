@@ -45,7 +45,7 @@ function Media({ scene, grupoUrl }: { scene: SceneData; grupoUrl: string }) {
 }
 
 export function NichePage({ niche }: { niche: Niche }) {
-  const grupoUrl = config.gruposWhatsapp[niche.slug] ?? '#'
+  const grupoUrl = niche.ctaHref ?? config.gruposWhatsapp[niche.slug] ?? '#'
   const pageStyle = { '--accent': niche.accent } as unknown as CSSProperties
   const heroStyle = niche.heroBg
     ? ({ backgroundImage: `url(${asset(niche.heroBg)})` } as CSSProperties)

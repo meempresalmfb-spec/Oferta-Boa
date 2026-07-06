@@ -24,6 +24,7 @@ export type Niche = {
   heroTitulo: string
   heroSub: string
   ctaLabel: string
+  ctaHref?: string // sobrescreve o link do CTA (senão usa config.gruposWhatsapp[slug])
   heroCta?: boolean // variante objetiva: CTA já no hero (acima da dobra)
   cenas: SceneData[]
 }
@@ -254,8 +255,8 @@ const heroVariante: Record<Slug, Record<'direto' | 'prova', { t: string; sub: st
   },
   casa: {
     direto: {
-      t: 'Panela, pote e organização gastando bem menos',
-      sub: 'As melhores ofertas pra casa caem todo dia no grupo do WhatsApp, com link direto do parceiro. Entrar é grátis.',
+      t: 'As melhores ofertas pra sua casa, todo dia',
+      sub: 'Todo dia a gente garimpa e manda o que está no menor preço, direto no canal do WhatsApp. Seguir é de graça.',
     },
     prova: {
       t: 'Como a gente acha o menor preço de verdade pra sua casa',
@@ -265,14 +266,15 @@ const heroVariante: Record<Slug, Record<'direto' | 'prova', { t: string; sub: st
 }
 
 // OBJETIVA: hero(+CTA) -> 1 cena de prova visual -> grátis+CTA. Curta de propósito.
-function cenasObjetiva(s: Slug): SceneData[] {
+function cenasObjetiva(s: Slug, canal = false): SceneData[] {
   const noun = nounOf[s]
+  const onde = canal ? 'canal' : 'grupo'
   return [
     {
       id: 'v1',
       eyebrow: 'todo dia no whatsapp',
-      titulo: 'As ofertas caem todo dia, direto no grupo',
-      copy: `Todo dia enviamos as melhores ofertas de ${noun} no grupo, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no grupo, nunca no privado.`,
+      titulo: `As ofertas caem todo dia, direto no ${onde}`,
+      copy: `Todo dia enviamos as melhores ofertas de ${noun} no ${onde}, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no ${onde}, nunca no privado.`,
       media: 'fotos',
       fotos: fotosOf(s),
       lado: 'esq',
@@ -321,22 +323,36 @@ function cenasComparativa(s: Slug): SceneData[] {
   ]
 }
 
-function makeVariant(s: Slug, kind: 'direto' | 'prova'): Niche {
+function makeVariant(
+  s: Slug,
+  kind: 'direto' | 'prova',
+  opts?: { ctaHref?: string; ctaLabel?: string; canal?: boolean },
+): Niche {
   const h = heroVariante[s][kind]
   return {
     ...niches[s],
     heroTitulo: h.t,
     heroSub: h.sub,
     heroCta: true, // CTA na capa nas duas variantes (direto e prova)
-    cenas: kind === 'direto' ? cenasObjetiva(s) : cenasComparativa(s),
+    ctaLabel: opts?.ctaLabel ?? niches[s].ctaLabel,
+    ctaHref: opts?.ctaHref,
+    cenas: kind === 'direto' ? cenasObjetiva(s, opts?.canal) : cenasComparativa(s),
   }
 }
+
+// Canal do WhatsApp (casa) — destino do CTA só da variante casa-direto (teste de anúncio).
+// As demais páginas casa seguem indo pro grupo (config.gruposWhatsapp.casa).
+const CANAL_CASA = 'https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R'
 
 export const variants: Record<string, Niche> = {
   'beleza-direto': makeVariant('beleza', 'direto'),
   'beleza-prova': makeVariant('beleza', 'prova'),
   'pet-direto': makeVariant('pet', 'direto'),
   'pet-prova': makeVariant('pet', 'prova'),
-  'casa-direto': makeVariant('casa', 'direto'),
+  'casa-direto': makeVariant('casa', 'direto', {
+    ctaHref: CANAL_CASA,
+    ctaLabel: 'Seguir o canal de ofertas',
+    canal: true,
+  }),
   'casa-prova': makeVariant('casa', 'prova'),
 }
