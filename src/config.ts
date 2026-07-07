@@ -4,7 +4,7 @@ export const config = {
   marca: 'Ofertaboa.ia.br',
   // ID do Pixel da Meta (Gerenciador de Eventos > fontes de dados).
   // VAZIO = tracking desligado (src/tracking.ts vira no-op, nada carrega).
-  metaPixelId: '',
+  metaPixelId: '1211274402070181',
   gruposWhatsapp: {
     beleza: 'https://chat.whatsapp.com/Fjza93cxBbYBgtmNMpepu1',
     pet: 'https://chat.whatsapp.com/KFwh3ObwvKUFWyNoDXLkez',
