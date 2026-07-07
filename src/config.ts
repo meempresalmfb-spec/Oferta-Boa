@@ -1,7 +1,10 @@
-// Marca e links de grupo — PLACEHOLDERS.
+﻿// Marca e links de grupo — PLACEHOLDERS.
 // marca: o Lucas decide. gruposWhatsapp: criados/colados na Fase 6.
 export const config = {
   marca: 'Ofertaboa.ia.br',
+  // ID do Pixel da Meta (Gerenciador de Eventos > fontes de dados).
+  // VAZIO = tracking desligado (src/tracking.ts vira no-op, nada carrega).
+  metaPixelId: '',
   gruposWhatsapp: {
     beleza: 'https://chat.whatsapp.com/Fjza93cxBbYBgtmNMpepu1',
     pet: 'https://chat.whatsapp.com/KFwh3ObwvKUFWyNoDXLkez',

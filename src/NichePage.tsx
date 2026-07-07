@@ -12,12 +12,24 @@ import {
 import { config } from './config'
 import type { Niche, SceneData } from './niches'
 import { asset } from './asset'
+import { initPixel, trackLead } from './tracking'
 import styles from './NichePage.module.css'
 
 // Template CEGO ao nicho: recebe um objeto de nicho e renderiza a página.
 // Não há nenhum `if (slug === 'beleza')` aqui — tudo vem do dado.
 
-function Media({ scene, grupoUrl }: { scene: SceneData; grupoUrl: string }) {
+// Pixel carrega uma vez por página, junto com o template (no-op sem metaPixelId).
+initPixel()
+
+function Media({
+  scene,
+  grupoUrl,
+  onCta,
+}: {
+  scene: SceneData
+  grupoUrl: string
+  onCta?: () => void
+}) {
   switch (scene.media) {
     case 'comparador':
       return (
@@ -36,7 +48,9 @@ function Media({ scene, grupoUrl }: { scene: SceneData; grupoUrl: string }) {
     case 'whyfree':
       return (
         <WhyFreeCard>
-          <CtaButton href={grupoUrl}>Entrar grátis</CtaButton>
+          <CtaButton href={grupoUrl} onClick={onCta}>
+            Entrar grátis
+          </CtaButton>
         </WhyFreeCard>
       )
     default:
@@ -46,6 +60,7 @@ function Media({ scene, grupoUrl }: { scene: SceneData; grupoUrl: string }) {
 
 export function NichePage({ niche }: { niche: Niche }) {
   const grupoUrl = niche.ctaHref ?? config.gruposWhatsapp[niche.slug] ?? '#'
+  const fireLead = () => trackLead(niche.pageId ?? niche.slug)
   const pageStyle = { '--accent': niche.accent } as unknown as CSSProperties
   const heroStyle = niche.heroBg
     ? ({ backgroundImage: `url(${asset(niche.heroBg)})` } as CSSProperties)
@@ -63,7 +78,9 @@ export function NichePage({ niche }: { niche: Niche }) {
           <p className={styles.heroSub}>{niche.heroSub}</p>
           {niche.heroCta ? (
             <div className={styles.heroCta}>
-              <CtaButton href={grupoUrl}>{niche.ctaLabel}</CtaButton>
+              <CtaButton href={grupoUrl} onClick={fireLead}>
+                {niche.ctaLabel}
+              </CtaButton>
             </div>
           ) : null}
         </div>
@@ -78,7 +95,9 @@ export function NichePage({ niche }: { niche: Niche }) {
             lado={scene.lado}
             bg={scene.bg}
             stack={scene.stack}
-            media={scene.media ? <Media scene={scene} grupoUrl={grupoUrl} /> : undefined}
+            media={
+              scene.media ? <Media scene={scene} grupoUrl={grupoUrl} onCta={fireLead} /> : undefined
+            }
           >
             {scene.copy}
           </Scene>
@@ -88,7 +107,9 @@ export function NichePage({ niche }: { niche: Niche }) {
       <SiteFooter marca={config.marca} />
 
       <div className={styles.stickyCta}>
-        <CtaButton href={grupoUrl}>{niche.ctaLabel}</CtaButton>
+        <CtaButton href={grupoUrl} onClick={fireLead}>
+          {niche.ctaLabel}
+        </CtaButton>
       </div>
     </div>
   )

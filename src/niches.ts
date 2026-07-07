@@ -25,6 +25,7 @@ export type Niche = {
   heroSub: string
   ctaLabel: string
   ctaHref?: string // sobrescreve o link do CTA (senão usa config.gruposWhatsapp[slug])
+  pageId?: string // identifica a página no tracking (senão usa o slug); variantes carimbam o próprio
   heroCta?: boolean // variante objetiva: CTA já no hero (acima da dobra)
   cenas: SceneData[]
 }
@@ -331,6 +332,7 @@ function makeVariant(
   const h = heroVariante[s][kind]
   return {
     ...niches[s],
+    pageId: `${s}-${kind}`, // ex. 'casa-direto' — sem isso o Lead sairia como 'casa' (slug do base)
     heroTitulo: h.t,
     heroSub: h.sub,
     heroCta: true, // CTA na capa nas duas variantes (direto e prova)

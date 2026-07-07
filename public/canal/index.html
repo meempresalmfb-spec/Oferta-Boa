@@ -7,8 +7,10 @@
   <title>Oferta Boa, canal de ofertas</title>
   <!-- Redirect estatico pro canal do WhatsApp. A Meta nao aceita link de WhatsApp
        direto no anuncio (erro #2446433), entao o anuncio aponta pra esta pagina
-       do proprio dominio e ela encaminha pro canal. -->
-  <meta http-equiv="refresh" content="0; url=https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R" />
+       do proprio dominio e ela encaminha pro canal.
+       O refresh de 2s e so FALLBACK pra navegador sem JS; com JS o script abaixo
+       redireciona em 400ms, depois de carimbar PageView + Lead no pixel. -->
+  <meta http-equiv="refresh" content="2; url=https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R" />
   <style>
     :root { color-scheme: light; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,8 +78,27 @@
     <p class="hint">Se nada acontecer em alguns segundos, toca no botao acima.</p>
   </main>
   <script>
-    // Encaminha na hora, sem deixar esta pagina no historico (replace).
-    window.location.replace("https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R");
+    // Pixel da Meta (pagina estatica: o ID e colado aqui, MESMO valor do
+    // metaPixelId em src/config.ts). VAZIO = nao carrega nada, so redireciona.
+    var PIXEL_ID = "";
+
+    if (PIXEL_ID) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+      // Chegar aqui = ir pro canal, entao o Lead e a propria passagem.
+      fbq('track', 'Lead', { content_name: 'canal' });
+    }
+
+    // Espera 400ms pros eventos sairem antes de encaminhar (replace = nao
+    // deixa esta pagina no historico). Sem pixel, o delay e imperceptivel.
+    setTimeout(function () {
+      window.location.replace("https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R");
+    }, 400);
   </script>
 </body>
 </html>
