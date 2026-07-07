@@ -12,6 +12,7 @@
   --accent-beleza: #e45e92;
   --accent-pet: #1fb39c;
   --accent-casa: #4f7ca6;
+  --accent-geral: #e8590c; /* página única /ofertas/ — laranja da marca (mesmo do /canal) */
 
   /* acento ATIVO — quem define por página é niches.js; aqui um default */
   --accent: var(--accent-beleza);

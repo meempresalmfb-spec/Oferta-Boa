@@ -16,8 +16,12 @@ export type SceneData = {
   stack?: boolean
 }
 
+// Slugs dos nichos BASE (o trio que a fábrica A/B deriva). 'geral' é a página
+// única de teste (/ofertas/), fora do trio — não entra em nounOf/heroVariante.
+export type Slug = 'beleza' | 'pet' | 'casa'
+
 export type Niche = {
-  slug: 'beleza' | 'pet' | 'casa'
+  slug: Slug | 'geral'
   nome: string
   accent: string
   heroBg?: string
@@ -68,7 +72,7 @@ const cenasComuns = (
   },
 ]
 
-export const niches: Record<Niche['slug'], Niche> = {
+export const niches: Record<Slug, Niche> = {
   beleza: {
     slug: 'beleza',
     nome: 'Beleza & Skincare',
@@ -221,8 +225,6 @@ export const niches: Record<Niche['slug'], Niche> = {
 // 'prova'   (comparativa): trust-first, abre no comparador + slot de print.
 // ======================================================================
 
-type Slug = Niche['slug']
-
 const nounOf: Record<Slug, string> = {
   beleza: 'skincare, maquiagem e perfumaria',
   pet: 'ração, petiscos e acessórios',
@@ -342,9 +344,9 @@ function makeVariant(
   }
 }
 
-// Canal do WhatsApp (casa) — destino do CTA só da variante casa-direto (teste de anúncio).
-// As demais páginas casa seguem indo pro grupo (config.gruposWhatsapp.casa).
-const CANAL_CASA = 'https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R'
+// Canal de transmissão do WhatsApp (GERAL, renomeado) — destino do CTA da
+// casa-direto e da página única /ofertas/. Grupos por nicho seguem no config.
+const CANAL = 'https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R'
 
 export const variants: Record<string, Niche> = {
   'beleza-direto': makeVariant('beleza', 'direto'),
@@ -352,9 +354,54 @@ export const variants: Record<string, Niche> = {
   'pet-direto': makeVariant('pet', 'direto'),
   'pet-prova': makeVariant('pet', 'prova'),
   'casa-direto': makeVariant('casa', 'direto', {
-    ctaHref: CANAL_CASA,
+    ctaHref: CANAL,
     ctaLabel: 'Seguir o canal de ofertas',
     canal: true,
   }),
   'casa-prova': makeVariant('casa', 'prova'),
+}
+
+// ======================================================================
+// PÁGINA ÚNICA GERAL (/ofertas/) — pivô 2026-07-07: teste só de casa foi
+// ruim, então uma página junta os nichos e leva pro CANAL de transmissão.
+// Estilo objetiva (CTA na dobra, grátis explícito). Fotos e comparadores
+// REUSAM os dados dos nichos base (mesma single source of truth do A/B).
+// ======================================================================
+
+const fotosMix = [0, 1, 2].flatMap((i) => [
+  fotosOf('casa')[i],
+  fotosOf('beleza')[i],
+  fotosOf('pet')[i],
+])
+
+export const geral: Niche = {
+  slug: 'geral',
+  pageId: 'ofertas', // tracking: content_name do Lead desta página
+  nome: 'Oferta Boa',
+  accent: 'var(--accent-geral)',
+  heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp',
+  heroSub:
+    'Beleza, casa, cozinha, pet e muito mais, sempre no menor preço e com link direto do parceiro. É só seguir o canal, de graça.',
+  ctaLabel: 'Seguir o canal de ofertas',
+  ctaHref: CANAL,
+  heroCta: true,
+  cenas: [
+    {
+      id: 'g1',
+      eyebrow: 'todo dia no whatsapp',
+      titulo: 'As ofertas caem todo dia, direto no canal',
+      copy: 'Todo dia enviamos as melhores ofertas de beleza, casa, cozinha, pet e muito mais no canal, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no canal, nunca no privado.',
+      media: 'fotos',
+      fotos: fotosMix,
+      lado: 'esq',
+    },
+    {
+      id: 'g2',
+      eyebrow: 'e o melhor de tudo',
+      titulo: '100% gratuito pra você',
+      copy: 'Sem mensalidade, sem pegadinha, e o preço pra você continua o mesmo ou menor. A gente recebe comissão da parceria com os marketplaces, por isso o seu acesso é, e sempre será, grátis.',
+      media: 'whyfree',
+      lado: 'dir',
+    },
+  ],
 }

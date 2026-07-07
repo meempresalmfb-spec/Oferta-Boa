@@ -27,6 +27,7 @@ export default defineConfig({
         'pet-prova': path.resolve(dirname, 'pet-prova/index.html'),
         'casa-direto': path.resolve(dirname, 'casa-direto/index.html'),
         'casa-prova': path.resolve(dirname, 'casa-prova/index.html'),
+        ofertas: path.resolve(dirname, 'ofertas/index.html'),
       },
     },
   },
