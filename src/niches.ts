@@ -368,11 +368,21 @@ export const variants: Record<string, Niche> = {
 // REUSAM os dados dos nichos base (mesma single source of truth do A/B).
 // ======================================================================
 
-const fotosMix = [0, 1, 2].flatMap((i) => [
-  fotosOf('casa')[i],
-  fotosOf('beleza')[i],
-  fotosOf('pet')[i],
-])
+// SEM foto de bicho de retrato aqui (parece venda de animal) — de pet, só a
+// de ração passa (produto no centro da cena). Regra do Lucas, 07/07.
+const fotoPetRacao = fotosOf('pet').filter((f) => f.includes('racao'))
+
+const fotosMix = [
+  fotosOf('casa')[0],
+  fotosOf('beleza')[0],
+  fotosOf('casa')[1],
+  fotosOf('beleza')[1],
+  ...fotoPetRacao,
+  fotosOf('casa')[2],
+  fotosOf('beleza')[2],
+  fotosOf('casa')[3],
+  fotosOf('beleza')[3],
+]
 
 export const geral: Niche = {
   slug: 'geral',
