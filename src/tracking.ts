@@ -1,9 +1,10 @@
 import { config } from './config'
 
-// Pixel da Meta + evento de conversão no clique do CTA.
-// Módulo COMPARTILHADO: NichePage e main.tsx importam daqui, então toda página
-// (e qualquer nicho futuro) herda o pixel sozinha — nada de colar snippet por HTML.
-// Sem `config.metaPixelId` tudo aqui é no-op: nenhum script carrega.
+// Tracking COMPARTILHADO: Pixel da Meta (conversão) + Microsoft Clarity
+// (comportamento: tempo na página, scroll, replay). NichePage e main.tsx
+// importam daqui, então toda página (e qualquer nicho futuro) herda os dois
+// sozinha — nada de colar snippet por HTML.
+// Sem o ID no config, cada um vira no-op: nenhum script carrega.
 
 type FbqFn = {
   (...args: unknown[]): void
@@ -14,10 +15,16 @@ type FbqFn = {
   version: string
 }
 
+type ClarityFn = {
+  (...args: unknown[]): void
+  q?: unknown[]
+}
+
 declare global {
   interface Window {
     fbq?: FbqFn
     _fbq?: FbqFn
+    clarity?: ClarityFn
   }
 }
 
@@ -56,4 +63,25 @@ export function initPixel(): void {
 // converteu (análogo do sub_id do lado Meta) — é o que destrava o A/B por variante.
 export function trackLead(pageId: string): void {
   window.fbq?.('track', 'Lead', { content_name: pageId })
+}
+
+let clarityInited = false
+
+// Injeta o snippet do Microsoft Clarity (idempotente, mesmo contrato do pixel).
+export function initClarity(): void {
+  if (clarityInited || !config.clarityProjectId || typeof window === 'undefined') return
+  clarityInited = true
+
+  if (!window.clarity) {
+    // Versão TS do snippet oficial: stub que enfileira chamadas até o tag carregar.
+    const clarity = function (...args: unknown[]) {
+      ;(clarity.q = clarity.q ?? []).push(args)
+    } as ClarityFn
+    window.clarity = clarity
+
+    const s = document.createElement('script')
+    s.async = true
+    s.src = `https://www.clarity.ms/tag/${config.clarityProjectId}`
+    document.head.appendChild(s)
+  }
 }

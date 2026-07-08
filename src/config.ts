@@ -5,6 +5,9 @@ export const config = {
   // ID do Pixel da Meta (Gerenciador de Eventos > fontes de dados).
   // VAZIO = tracking desligado (src/tracking.ts vira no-op, nada carrega).
   metaPixelId: '1211274402070181',
+  // ID do projeto no Microsoft Clarity (clarity.microsoft.com) — tempo na
+  // página, scroll, replay de sessão. Mesmo contrato: VAZIO = desligado.
+  clarityProjectId: 'xjas05pq3f',
   gruposWhatsapp: {
     beleza: 'https://chat.whatsapp.com/Fjza93cxBbYBgtmNMpepu1',
     pet: 'https://chat.whatsapp.com/KFwh3ObwvKUFWyNoDXLkez',

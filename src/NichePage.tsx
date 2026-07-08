@@ -12,14 +12,15 @@ import {
 import { config } from './config'
 import type { Niche, SceneData } from './niches'
 import { asset } from './asset'
-import { initPixel, trackLead } from './tracking'
+import { initClarity, initPixel, trackLead } from './tracking'
 import styles from './NichePage.module.css'
 
 // Template CEGO ao nicho: recebe um objeto de nicho e renderiza a página.
 // Não há nenhum `if (slug === 'beleza')` aqui — tudo vem do dado.
 
-// Pixel carrega uma vez por página, junto com o template (no-op sem metaPixelId).
+// Tracking carrega uma vez por página, junto com o template (no-op sem os IDs).
 initPixel()
+initClarity()
 
 function Media({
   scene,
