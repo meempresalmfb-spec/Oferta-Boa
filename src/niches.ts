@@ -1,4 +1,5 @@
 import type { PriceComparatorCardProps } from './lib'
+import { config } from './config'
 
 // Toda a diferença entre os 3 sites vive AQUI (fábrica cega ao nicho).
 // Adicionar um 4º nicho = só um objeto novo + uma entry + um index.html.
@@ -345,7 +346,7 @@ function makeVariant(
 }
 
 // Canal de transmissão do WhatsApp (GERAL, renomeado) — destino do CTA da
-// casa-direto e da página única /ofertas/. Grupos por nicho seguem no config.
+// casa-direto. A /ofertas/ voltou pro grupo fechado em 08/07 (config.gruposWhatsapp.casa).
 const CANAL = 'https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R'
 
 export const variants: Record<string, Niche> = {
@@ -363,9 +364,9 @@ export const variants: Record<string, Niche> = {
 
 // ======================================================================
 // PÁGINA ÚNICA GERAL (/ofertas/) — pivô 2026-07-07: teste só de casa foi
-// ruim, então uma página junta os nichos e leva pro CANAL de transmissão.
-// Estilo objetiva (CTA na dobra, grátis explícito). Fotos e comparadores
-// REUSAM os dados dos nichos base (mesma single source of truth do A/B).
+// ruim, então uma página junta os nichos. 08/07: CTA voltou do canal pro
+// GRUPO FECHADO (casa). Estilo objetiva (CTA na dobra, grátis explícito).
+// Fotos e comparadores REUSAM os dados dos nichos base (mesma SSOT do A/B).
 // ======================================================================
 
 // SEM foto de bicho de retrato aqui (parece venda de animal) — de pet, só a
@@ -391,16 +392,16 @@ export const geral: Niche = {
   accent: 'var(--accent-geral)',
   heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp',
   heroSub:
-    'Beleza, casa, cozinha, pet e muito mais, sempre no menor preço e com link direto do parceiro. É só seguir o canal, de graça.',
-  ctaLabel: 'Seguir o canal de ofertas',
-  ctaHref: CANAL,
+    'Beleza, casa, cozinha, pet e muito mais, sempre no menor preço e com link direto do parceiro. É só entrar no grupo, de graça.',
+  ctaLabel: 'Entrar no grupo de ofertas',
+  ctaHref: config.gruposWhatsapp.casa,
   heroCta: true,
   cenas: [
     {
       id: 'g1',
       eyebrow: 'todo dia no whatsapp',
-      titulo: 'As ofertas caem todo dia, direto no canal',
-      copy: 'Todo dia enviamos as melhores ofertas de beleza, casa, cozinha, pet e muito mais no canal, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no canal, nunca no privado.',
+      titulo: 'As ofertas caem todo dia, direto no grupo',
+      copy: 'Todo dia enviamos as melhores ofertas de beleza, casa, cozinha, pet e muito mais no grupo, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no grupo, nunca no privado.',
       media: 'fotos',
       fotos: fotosMix,
       lado: 'esq',
