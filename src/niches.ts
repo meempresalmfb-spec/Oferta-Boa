@@ -397,17 +397,18 @@ export const geral: Niche = {
   ctaHref: config.gruposWhatsapp.casa,
   // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
   cenas: [
-    // g0 = prints REAIS da semeada do dia (public/img/prints/oferta-1..3.png,
+    // g0 = prints REAIS da semeada do dia (public/img/prints/oferta-1..3.jpg,
     // nomes FIXOS). Rotina diária: semeou o grupo → recorta os prints novos por
     // cima dos mesmos arquivos + push, sem tocar em código. Só entra print de
     // oferta que está MESMO no grupo, senão a página mente pro novato.
+    // SEMPRE JPEG (~50KB), nunca PNG (o mesmo print dava ~300KB, lição 09/07).
     {
       id: 'g0',
       eyebrow: 'saiu hoje',
       titulo: 'Olha o que enviamos no grupo hoje',
       copy: 'Print real, do jeito que chegou pra quem tá no grupo: preço conferido e link direto do parceiro. Amanhã tem outras.',
       media: 'print',
-      fotos: ['/img/prints/oferta-1.png', '/img/prints/oferta-2.png', '/img/prints/oferta-3.png'],
+      fotos: ['/img/prints/oferta-1.jpg', '/img/prints/oferta-2.jpg', '/img/prints/oferta-3.jpg'],
       stack: true,
       lado: 'dir',
     },
