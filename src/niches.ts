@@ -390,7 +390,7 @@ export const geral: Niche = {
   pageId: 'ofertas', // tracking: content_name do Lead desta página
   nome: 'Oferta Boa',
   accent: 'var(--accent-geral)',
-  heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp',
+  heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp, de graça',
   heroSub:
     'Nosso software garimpa as melhores ofertas da internet e confere o preço antes de indicar, pra você pagar menos do que no site normal. Desliza e olha o que saiu no grupo hoje.',
   ctaLabel: 'Entrar no grupo de ofertas',

@@ -14,9 +14,11 @@
   background: var(--surface);
 }
 
-/* print real segue a proporção da imagem; 9/19 (mockup de celular) é só do placeholder */
+/* print real segue a proporção da imagem; 9/19 (mockup de celular) é só do
+   placeholder. Moldura clara (decisão do Lucas 09/07: escura pesava no print). */
 .img {
   height: auto;
+  border-color: color-mix(in srgb, var(--ink) 12%, var(--bg));
 }
 
 .placeholder {
