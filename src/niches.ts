@@ -385,33 +385,6 @@ const fotosMix = [
   fotosOf('beleza')[3],
 ]
 
-// Ofertas do dia (cena g0) — ESPELHO da semeada do grupo via montador: só
-// entra aqui o que foi postado lá, senão a página mente pro novato que entrar.
-// Atualizar junto com a semeada diária (o hero promete "o que saiu hoje").
-const ofertasDoDia: PriceComparatorCardProps[] = [
-  {
-    produto: 'Aspirador de Pó e Água WAP GTW 10',
-    precoHoje: 'R$ 209,02',
-    maiorPreco: 'R$ 399',
-    quedaPct: '48% mais barato',
-    menorDesde: 'menor preço desde nov/2025',
-  },
-  {
-    produto: 'Kit Principia Essencial Pele Sensível',
-    precoHoje: 'R$ 145,99',
-    maiorPreco: 'R$ 211',
-    quedaPct: '31% mais barato',
-    menorDesde: 'menor preço desde fev/2026',
-  },
-  {
-    produto: 'Panela de Pressão 4,5L Cerâmica',
-    precoHoje: 'R$ 202,54',
-    maiorPreco: 'R$ 239',
-    quedaPct: '15% mais barato',
-    menorDesde: 'menor preço desde mar/2026',
-  },
-]
-
 export const geral: Niche = {
   slug: 'geral',
   pageId: 'ofertas', // tracking: content_name do Lead desta página
@@ -422,15 +395,19 @@ export const geral: Niche = {
     'Nosso software garimpa as melhores ofertas da internet e confere o preço antes de indicar, pra você pagar menos do que no site normal. Desliza e olha o que saiu no grupo hoje.',
   ctaLabel: 'Entrar no grupo de ofertas',
   ctaHref: config.gruposWhatsapp.casa,
-  heroCta: true,
+  // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
   cenas: [
+    // g0 = prints REAIS da semeada do dia (public/img/prints/oferta-1..3.png,
+    // nomes FIXOS). Rotina diária: semeou o grupo → recorta os prints novos por
+    // cima dos mesmos arquivos + push, sem tocar em código. Só entra print de
+    // oferta que está MESMO no grupo, senão a página mente pro novato.
     {
       id: 'g0',
       eyebrow: 'saiu hoje',
-      titulo: 'O que caiu no grupo hoje',
-      copy: 'Essas três foram pro grupo hoje, com o preço conferido e o link direto do parceiro. Amanhã tem outras.',
-      media: 'comparador',
-      comparadores: ofertasDoDia,
+      titulo: 'Olha o que enviamos no grupo hoje',
+      copy: 'Print real, do jeito que chegou pra quem tá no grupo: preço conferido e link direto do parceiro. Amanhã tem outras.',
+      media: 'print',
+      fotos: ['/img/prints/oferta-1.png', '/img/prints/oferta-2.png', '/img/prints/oferta-3.png'],
       stack: true,
       lado: 'dir',
     },

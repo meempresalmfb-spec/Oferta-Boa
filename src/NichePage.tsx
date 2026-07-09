@@ -43,7 +43,24 @@ function Media({
         </div>
       )
     case 'print':
-      return <PrintSlot legenda="exemplo do grupo" />
+      // com `fotos` = prints reais lado a lado; sem = placeholder (páginas prova)
+      return scene.fotos?.length ? (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 16,
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}
+        >
+          {scene.fotos.map((f, i) => (
+            <PrintSlot key={f} src={asset(f)} alt={`print do grupo ${i + 1}`} />
+          ))}
+        </div>
+      ) : (
+        <PrintSlot legenda="exemplo do grupo" />
+      )
     case 'fotos':
       return <PhotoStrip fotos={(scene.fotos ?? []).map(asset)} />
     case 'whyfree':

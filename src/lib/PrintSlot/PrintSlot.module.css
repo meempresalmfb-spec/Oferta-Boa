@@ -7,16 +7,21 @@
 .img,
 .placeholder {
   width: 100%;
-  aspect-ratio: 9 / 19;
   border-radius: 28px;
   border: 8px solid var(--ink);
   box-sizing: border-box;
   display: block;
-  object-fit: cover;
   background: var(--surface);
 }
 
+/* print real segue a proporção da imagem; 9/19 (mockup de celular) é só do placeholder */
+.img {
+  height: auto;
+}
+
 .placeholder {
+  aspect-ratio: 9 / 19;
+  object-fit: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
