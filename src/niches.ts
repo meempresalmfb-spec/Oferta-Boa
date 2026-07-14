@@ -397,7 +397,7 @@ export const geral: Niche = {
   heroCompact: true,
   heroTitulo: 'As melhores ofertas da internet, todo dia, de graça',
   heroSub:
-    'Nosso software confere o preço antes de indicar, pra você pagar menos do que no site normal. Olha o que saiu no grupo hoje:',
+    'Pare de perder tempo procurando promoções: nosso software garimpa, confere o preço e envia de graça pra você. Olha o que saiu no grupo hoje:',
   ctaLabel: 'Entrar no grupo de ofertas',
   ctaHref: config.gruposWhatsapp.casa,
   // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
