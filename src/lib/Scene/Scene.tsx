@@ -10,11 +10,22 @@ export type SceneProps = {
   id?: string
   bg?: string // foto de fundo da seção (full-bleed). Com ela, o texto fica branco.
   stack?: boolean // texto em cima, media embaixo (em vez de lado a lado)
+  mediaFirst?: boolean // media ANTES do texto quando empilhado (prova na dobra)
 }
 
 // Layout de uma cena: copy + media. Com `bg`, vira seção full-bleed com a
 // foto atrás + overlay escuro (texto branco). Empilha no mobile.
-export function Scene({ eyebrow, titulo, children, media, lado = 'dir', id, bg, stack }: SceneProps) {
+export function Scene({
+  eyebrow,
+  titulo,
+  children,
+  media,
+  lado = 'dir',
+  id,
+  bg,
+  stack,
+  mediaFirst,
+}: SceneProps) {
   const hasBg = Boolean(bg)
   return (
     <section
@@ -24,6 +35,7 @@ export function Scene({ eyebrow, titulo, children, media, lado = 'dir', id, bg, 
         lado === 'esq' ? styles.mediaLeft : '',
         hasBg ? styles.hasBg : '',
         stack ? styles.stack : '',
+        mediaFirst ? styles.mediaFirst : '',
       ]
         .filter(Boolean)
         .join(' ')}

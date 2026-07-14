@@ -15,6 +15,7 @@ export type SceneData = {
   bg?: string
   lado?: 'esq' | 'dir'
   stack?: boolean
+  mediaFirst?: boolean // media ANTES do texto quando empilhado (prova na dobra)
 }
 
 // Slugs dos nichos BASE (o trio que a fábrica A/B deriva). 'geral' é a página
@@ -32,6 +33,7 @@ export type Niche = {
   ctaHref?: string // sobrescreve o link do CTA (senão usa config.gruposWhatsapp[slug])
   pageId?: string // identifica a página no tracking (senão usa o slug); variantes carimbam o próprio
   heroCta?: boolean // variante objetiva: CTA já no hero (acima da dobra)
+  heroCompact?: boolean // hero curto: a 1ª cena entra na primeira dobra (prova na dobra)
   cenas: SceneData[]
 }
 
@@ -390,9 +392,12 @@ export const geral: Niche = {
   pageId: 'ofertas', // tracking: content_name do Lead desta página
   nome: 'Oferta Boa',
   accent: 'var(--accent-geral)',
-  heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp, de graça',
+  // 14/07 prova na dobra: hero curto + prints da g0 já na primeira tela (funil
+  // rasgava na página→clique: 51% fugiam <5s sem ver nada concreto).
+  heroCompact: true,
+  heroTitulo: 'As melhores ofertas da internet, todo dia, de graça',
   heroSub:
-    'Nosso software garimpa as melhores ofertas da internet e confere o preço antes de indicar, pra você pagar menos do que no site normal. Desliza e olha o que saiu no grupo hoje.',
+    'Nosso software confere o preço antes de indicar, pra você pagar menos do que no site normal. Olha o que saiu no grupo hoje:',
   ctaLabel: 'Entrar no grupo de ofertas',
   ctaHref: config.gruposWhatsapp.casa,
   // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
@@ -404,13 +409,14 @@ export const geral: Niche = {
     // SEMPRE JPEG (~50KB), nunca PNG (o mesmo print dava ~300KB, lição 09/07).
     {
       id: 'g0',
-      eyebrow: 'saiu hoje',
-      titulo: 'Olha o que enviamos no grupo hoje',
+      eyebrow: 'direto do grupo',
+      titulo: 'Isso saiu hoje, no nosso grupo',
       copy: 'Print real, do jeito que chegou pra quem tá no grupo: preço conferido e link direto do parceiro. Amanhã tem outras.',
       media: 'print',
       fotos: ['/img/prints/oferta-1.jpg', '/img/prints/oferta-2.jpg', '/img/prints/oferta-3.jpg'],
       stack: true,
       lado: 'dir',
+      mediaFirst: true, // prints ANTES do texto: o 1º print nasce na dobra
     },
     {
       id: 'g1',

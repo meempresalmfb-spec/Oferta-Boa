@@ -45,6 +45,18 @@
   width: 100%;
 }
 
+/* mediaFirst: media antes do texto quando a cena empilha (prova na dobra).
+   Só no mobile aqui; no desktop vale apenas junto com .stack (regra abaixo). */
+@media (max-width: 759.98px) {
+  .mediaFirst {
+    padding-top: 32px;
+  }
+
+  .mediaFirst .inner {
+    flex-direction: column-reverse;
+  }
+}
+
 @media (min-width: 760px) {
   .inner {
     flex-direction: row;
@@ -69,6 +81,11 @@
   .stack .inner {
     flex-direction: column;
     align-items: center;
+  }
+
+  /* stack + mediaFirst: media em cima, texto embaixo (prova na dobra) */
+  .stack.mediaFirst .inner {
+    flex-direction: column-reverse;
   }
 
   .stack .text {

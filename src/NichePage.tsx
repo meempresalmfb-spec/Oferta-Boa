@@ -55,7 +55,8 @@ function Media({
           }}
         >
           {scene.fotos.map((f, i) => (
-            <PrintSlot key={f} src={asset(f)} alt={`print do grupo ${i + 1}`} />
+            // 1º print carrega eager: em cena mediaFirst ele nasce na dobra
+            <PrintSlot key={f} src={asset(f)} alt={`print do grupo ${i + 1}`} eager={i === 0} />
           ))}
         </div>
       ) : (
@@ -87,7 +88,13 @@ export function NichePage({ niche }: { niche: Niche }) {
   return (
     <div style={pageStyle} className={styles.page}>
       <header
-        className={[styles.hero, niche.heroBg ? styles.hasImg : ''].filter(Boolean).join(' ')}
+        className={[
+          styles.hero,
+          niche.heroBg ? styles.hasImg : '',
+          niche.heroCompact ? styles.compact : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
         style={heroStyle}
       >
         <div className={styles.heroInner}>
@@ -104,8 +111,8 @@ export function NichePage({ niche }: { niche: Niche }) {
         </div>
       </header>
 
-      {niche.cenas.map((scene) => (
-        <ScrollReveal key={scene.id}>
+      {niche.cenas.map((scene) => {
+        const cena = (
           <Scene
             id={scene.id}
             eyebrow={scene.eyebrow}
@@ -113,14 +120,22 @@ export function NichePage({ niche }: { niche: Niche }) {
             lado={scene.lado}
             bg={scene.bg}
             stack={scene.stack}
+            mediaFirst={scene.mediaFirst}
             media={
               scene.media ? <Media scene={scene} grupoUrl={grupoUrl} onCta={fireLead} /> : undefined
             }
           >
             {scene.copy}
           </Scene>
-        </ScrollReveal>
-      ))}
+        )
+        // cena mediaFirst nasce na dobra: sem ScrollReveal, senão o observer
+        // pode não disparar em tela baixa e a dobra abre vazia
+        return scene.mediaFirst ? (
+          <div key={scene.id}>{cena}</div>
+        ) : (
+          <ScrollReveal key={scene.id}>{cena}</ScrollReveal>
+        )
+      })}
 
       <SiteFooter marca={config.marca} />
 
