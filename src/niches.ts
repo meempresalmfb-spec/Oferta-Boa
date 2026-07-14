@@ -395,9 +395,9 @@ export const geral: Niche = {
   // 14/07 prova na dobra: hero curto + prints da g0 já na primeira tela (funil
   // rasgava na página→clique: 51% fugiam <5s sem ver nada concreto).
   heroCompact: true,
-  heroTitulo: 'Os melhores achadinhos da internet, todo dia, de graça',
+  heroTitulo: 'As melhores promoções da internet, direto no seu WhatsApp, de graça',
   heroSub:
-    'Pare de perder tempo procurando promoções: nosso software caça, confere o preço e envia de graça pra você. Olha o que saiu no grupo hoje:',
+    'Pare de perder tempo procurando ofertas: nosso software caça, confere o preço e envia de graça pra você. Olha o que saiu no grupo hoje:',
   ctaLabel: 'Entrar no grupo de ofertas',
   ctaHref: config.gruposWhatsapp.casa,
   // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
