@@ -1,5 +1,4 @@
 import type { PriceComparatorCardProps } from './lib'
-import { config } from './config'
 
 // Toda a diferença entre os 3 sites vive AQUI (fábrica cega ao nicho).
 // Adicionar um 4º nicho = só um objeto novo + uma entry + um index.html.
@@ -346,7 +345,8 @@ function makeVariant(
 }
 
 // Canal de transmissão do WhatsApp (GERAL, renomeado) — destino do CTA da
-// casa-direto. A /ofertas/ voltou pro grupo fechado em 08/07 (config.gruposWhatsapp.casa).
+// casa-direto E da /ofertas/ (14/07: teste do grupo fechado 08-14/07 deu 3
+// entradas a ~R$95 cada; hipótese nova = objeção é expor o número no grupo).
 const CANAL = 'https://whatsapp.com/channel/0029Vb895rjB4hdbk2ZJ8r3R'
 
 export const variants: Record<string, Niche> = {
@@ -364,8 +364,9 @@ export const variants: Record<string, Niche> = {
 
 // ======================================================================
 // PÁGINA ÚNICA GERAL (/ofertas/) — pivô 2026-07-07: teste só de casa foi
-// ruim, então uma página junta os nichos. 08/07: CTA voltou do canal pro
-// GRUPO FECHADO (casa). Estilo objetiva (CTA na dobra, grátis explícito).
+// ruim, então uma página junta os nichos. 08/07: CTA foi pro GRUPO fechado;
+// 14/07: voltou pro CANAL (grupo converteu 3 em ~2.400 views; canal não
+// expõe o número do seguidor). Estilo objetiva (grátis explícito).
 // Fotos e comparadores REUSAM os dados dos nichos base (mesma SSOT do A/B).
 // ======================================================================
 
@@ -392,21 +393,21 @@ export const geral: Niche = {
   accent: 'var(--accent-geral)',
   heroTitulo: 'As melhores ofertas da internet, todo dia no seu WhatsApp, de graça',
   heroSub:
-    'Nosso software garimpa as melhores ofertas da internet e confere o preço antes de indicar, pra você pagar menos do que no site normal. Desliza e olha o que saiu no grupo hoje.',
-  ctaLabel: 'Entrar no grupo de ofertas',
-  ctaHref: config.gruposWhatsapp.casa,
+    'Nosso software garimpa as melhores ofertas da internet e confere o preço antes de indicar, pra você pagar menos do que no site normal. Desliza e olha o que saiu no canal hoje.',
+  ctaLabel: 'Seguir o canal de ofertas',
+  ctaHref: CANAL,
   // sem heroCta: decisão 09/07 (o sticky já fica sempre visível; hero só promete)
   cenas: [
     // g0 = prints REAIS da semeada do dia (public/img/prints/oferta-1..3.jpg,
-    // nomes FIXOS). Rotina diária: semeou o grupo → recorta os prints novos por
+    // nomes FIXOS). Rotina diária: semeou o CANAL → recorta os prints novos por
     // cima dos mesmos arquivos + push, sem tocar em código. Só entra print de
-    // oferta que está MESMO no grupo, senão a página mente pro novato.
+    // oferta que está MESMO no canal, senão a página mente pro novato.
     // SEMPRE JPEG (~50KB), nunca PNG (o mesmo print dava ~300KB, lição 09/07).
     {
       id: 'g0',
       eyebrow: 'saiu hoje',
-      titulo: 'Olha o que enviamos no grupo hoje',
-      copy: 'Print real, do jeito que chegou pra quem tá no grupo: preço conferido e link direto do parceiro. Amanhã tem outras.',
+      titulo: 'Olha o que enviamos no canal hoje',
+      copy: 'Print real, do jeito que chega pra quem segue o canal: preço conferido e link direto do parceiro. Amanhã tem outras.',
       media: 'print',
       fotos: ['/img/prints/oferta-1.jpg', '/img/prints/oferta-2.jpg', '/img/prints/oferta-3.jpg'],
       stack: true,
@@ -415,8 +416,8 @@ export const geral: Niche = {
     {
       id: 'g1',
       eyebrow: 'todo dia no whatsapp',
-      titulo: 'As ofertas caem todo dia, direto no grupo',
-      copy: 'Todo dia enviamos as melhores ofertas de beleza, casa, cozinha, pet e muito mais no grupo, sempre com o link direto do parceiro e no menor preço. As ofertas saem só no grupo, nunca no privado.',
+      titulo: 'As ofertas caem todo dia, direto no canal',
+      copy: 'Todo dia enviamos as melhores ofertas de beleza, casa, cozinha, pet e muito mais no canal, sempre com o link direto do parceiro e no menor preço. Canal é só receber: seu número não aparece pra ninguém e você sai quando quiser.',
       media: 'fotos',
       fotos: fotosMix,
       lado: 'esq',
