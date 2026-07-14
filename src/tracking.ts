@@ -61,8 +61,12 @@ export function initPixel(): void {
 
 // Evento padrão `Lead` no clique do CTA. `content_name` identifica QUAL página
 // converteu (análogo do sub_id do lado Meta) — é o que destrava o A/B por variante.
+// O evento custom do Clarity espelha o Lead só pra filtrar sessão/replay no
+// painel (quem clicou vs quem não clicou); a API de export não o expõe, então
+// contagem oficial de clique continua sendo o Lead da Meta.
 export function trackLead(pageId: string): void {
   window.fbq?.('track', 'Lead', { content_name: pageId })
+  window.clarity?.('event', 'cta_click')
 }
 
 let clarityInited = false
